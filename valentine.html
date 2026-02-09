@@ -84,39 +84,34 @@
   </audio>
 
   <script>
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-  const sound = document.getElementById("yesSound");
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const sound = document.getElementById("yesSound");
 
-  let yesScale = 1;
+    let yesScale = 1;
 
-  function moveNoButton() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    function moveNoButton() {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
 
-    yesScale += 0.15;
-    yesBtn.style.transform = `scale(${yesScale})`;
-  }
-
-  // Laptop
-  noBtn.addEventListener("mouseover", moveNoButton);
-
-  // Mobile
-  noBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    moveNoButton();
-  });
-
-  yesBtn.addEventListener("click", async () => {
-    try {
-      await sound.play(); // force play
-    } catch (err) {
-      console.log("Sound blocked:", err);
+      yesScale += 0.15;
+      yesBtn.style.transform = `scale(${yesScale})`;
     }
 
-    setTimeout(() => {
+    // Laptop (mouse)
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Mobile (touch)
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", () => {
+      sound.play();
+
       document.body.innerHTML = `
         <div style="
           height:100vh;
@@ -131,24 +126,22 @@
           You’re officially my Valentine 💐</h1>
         </div>
       `;
-    }, 500); // delay so sound plays
-  });
+    });
 
-  // Floating hearts
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+    // Create floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
 
-    document.body.appendChild(heart);
+      document.body.appendChild(heart);
 
-    setTimeout(() => heart.remove(), 7000);
-  }, 300);
-</script>
-
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
+  </script>
 
 </body>
 </html>
